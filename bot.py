@@ -105,7 +105,6 @@ def callback(context):
 
 def main():
     updater = Updater(TOKEN, use_context=True)
-    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
 
     dp = updater.dispatcher
     jq = updater.job_queue
@@ -121,6 +120,7 @@ def main():
 
     dp.add_error_handler(error)
 
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     updater.bot.setWebhook('https://your-app-name.herokuapp.com/' + TOKEN)
     updater.idle()
 
