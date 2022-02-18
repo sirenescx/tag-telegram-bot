@@ -3,10 +3,18 @@
 # This program is dedicated to the public domain under the CC0 license.
 
 import json
+import os
 import logging
 from random import randint
 from telegram.ext import Updater, CommandHandler
 from datetime import date, datetime
+
+
+PORT = int(os.environ.get('PORT', 5000))
+TOKEN = os.environ['TOKEN']
+CHAT_ID = os.environ['CHAT_ID']
+
+API_ENDPOINT = 'https://dog.ceo/api/breeds/image/random'
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -96,12 +104,9 @@ def callback(context):
 
 
 def main():
-    with open('settings.json', 'r') as config_file:
-        configuration = json.load(config_file)
+    updater = Updater(TOKEN, use_context=True)
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
 
-    global CHAT_ID
-    CHAT_ID = configuration['chat_id']
-    updater = Updater(configuration['token'], use_context=True)
     dp = updater.dispatcher
     jq = updater.job_queue
 
@@ -116,7 +121,7 @@ def main():
 
     dp.add_error_handler(error)
 
-    updater.start_polling()
+    updater.bot.setWebhook('https://your-app-name.herokuapp.com/' + TOKEN)
     updater.idle()
 
 
