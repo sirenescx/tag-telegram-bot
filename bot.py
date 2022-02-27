@@ -13,7 +13,6 @@ PORT = int(os.environ.get('PORT', 5000))
 TOKEN = os.environ['TOKEN']
 CHAT_ID = os.environ['CHAT_ID']
 OAUTH_TOKEN = os.environ['OAUTH_TOKEN']
-# curl -X GET "https://api.contest.yandex.net/api/public/v2/contests/34981" -H "accept: application/json" -H "Authorization: OAuth AQAAAAA3_mxGAAewRVM3xnu9WkuNhir7t0YHD68"
 
 API_ENDPOINT = 'https://dog.ceo/api/breeds/image/random'
 
