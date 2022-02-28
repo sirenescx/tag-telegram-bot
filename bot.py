@@ -164,6 +164,10 @@ def get_status(update, context):
         context.bot.send_message(chat_id=CHAT_ID, text='Сейчас не идет контест')
 
 
+def prevent_idle(context):
+    context.bot_data['last_idle_update'] = datetime.now()
+
+
 def main():
     updater = Updater(TOKEN, use_context=True)
 
@@ -179,6 +183,7 @@ def main():
     dp.add_handler(CommandHandler('get_status', get_status))
 
     job_minute = jq.run_repeating(check_messages, interval=12 * 60 * 60, first=30)
+    job_minute = jq.run_repeating(prevent_idle, interval=30 * 60, first=10 * 60)
 
     dp.add_error_handler(error)
 
